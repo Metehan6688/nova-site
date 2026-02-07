@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>NOVA Ecosystem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: radial-gradient(circle at top, #0a0f1f, #000);
+            color: #e0e0e0;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(to bottom, #0f172a, transparent);
+        }
+
+        header h1 {
+            font-size: 64px;
+            letter-spacing: 6px;
+            color: #38bdf8;
+        }
+
+        header p {
+            max-width: 700px;
+            margin: auto;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        section {
+            max-width: 1100px;
+            margin: auto;
+            padding: 60px 20px;
+        }
+
+        h2 {
+            border-left: 4px solid #38bdf8;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            color: #7dd3fc;
+        }
+
+        /* Cards */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(20, 30, 60, 0.5);
+            border: 1px solid rgba(56,189,248,0.3);
+            border-radius: 10px;
+            padding: 25px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(56,189,248,0.4);
+        }
+
+        .card h3 {
+            color: #38bdf8;
+        }
+
+        /* Roadmap */
+
+        .roadmap li {
+            margin-bottom: 12px;
+            padding-left: 10px;
+        }
+
+        /* Contact */
+
+        .contact a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+
+        footer {
+            background: #050814;
+            padding: 30px;
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .warning {
+            margin-top: 20px;
+            color: #fca5a5;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header id="hero"></header>
+
+<section id="about"></section>
+
+<section id="products"></section>
+
+<section id="roadmap"></section>
+
+<section id="contact"></section>
+
+<footer id="footer"></footer>
+
+<script>
+
+const DATA = {
+    hero: {
+        title: "NOVA",
+        subtitle: "Dağıtılmış Kontrol Ekosistemi Projesi",
+        powered: "PulsarRTOS • Atarca Commander • Cody"
+    },
+
+    about: {
+        title: "Hakkında",
+        text: `
+NOVA ekosistemi, gömülü sistemler ve robotik başta olmak üzere
+çok sayıda elektronik projede kullanılmak üzere geliştirilmiş
+dağıtılmış bir kontrol altyapısıdır.
+
+Kendi RTOS sisteminin henüz tam stabil olmamasına ve bazı
+kronik sorunlar barındırmasına rağmen, tüm araçları tek
+bir çatı altında toplamayı hedefler.
+
+Sistem modüler bir yapıya sahiptir ve ilerleyen aşamalarda
+genişletilebilir olacak şekilde tasarlanmaktadır.
+`
+    },
+
+    products: {
+        title: "Ürünler",
+        items: [
+            {
+                name: "PulsarRTOS",
+                desc: `
+Basit ve geliştirme aşamasında bulunan bir RTOS prototibidir.
+Ekip tarafından açık kaynak olarak geliştirilmektedir.
+
+Gömülü platformlar için düşük gecikme süresi, determinizm
+ve güvenilirliğe odaklanır.
+`
+            },
+            {
+                name: "Atarca Commander",
+                desc: `
+Basit arayüzlü, özelleştirilebilir bir terminal uygulamasıdır.
+
+Kendi sade komut diline sahiptir ve Linux terminaline benzer
+bazı komutları destekler.
+
+İlk sürümündedir. İleride eklenti sistemi planlanmaktadır.
+`
+            },
+            {
+                name: "Cody",
+                desc: `
+MCU ile terminal arasındaki iletişimi sağlayan kütüphanedir.
+
+Protokol, şifreleme ve bağlantı ayarlarını içerir.
+.h dosyası olarak projelere dahil edilir.
+
+Şu anda alfa sürümündedir, yayınlanmamıştır.
+Sadece ESP32 üzerinde test edilmiştir.
+`
+            }
+        ]
+    },
+
+    roadmap: {
+        title: "Roadmap",
+        text: `
+Sistem parçaları ilerleyen süreçte geliştirilecek ve
+kurulum dosyaları paylaşılacaktır.
+
+Mevcut çalışmalar GitHub hesabımda bulunmaktadır.
+`,
+        items: [
+            "RTOS stabilizasyonu",
+            "Modüler yapı iyileştirmeleri",
+            "Cody protokol genişletmesi",
+            "Kurulum araçları",
+            "Dokümantasyon"
+        ],
+        github: "https://github.com/Metehan6688"
+    },
+
+    contact: {
+        title: "Contact",
+        github: "https://github.com/Metehan6688",
+        mail: "furkanmetehansemerci@gmail.com"
+    },
+
+    footer: {
+        warning: `
+Bu projeler ticari amaçlı değildir ve stabil değildir.
+Şu anda yalnızca test aşamasındadır.
+
+Ekip 3 kişiden oluşmaktadır ve amatör geliştiricilerden oluşur.
+`
+    }
+};
+
+
+/* Render */
+
+function renderHero() {
+    const h = DATA.hero;
+
+    document.getElementById("hero").innerHTML = `
+        <h1>${h.title}</h1>
+        <p>${h.subtitle}</p>
+        <p><strong>Powered by:</strong> ${h.powered}</p>
+    `;
+}
+
+function renderAbout() {
+    const a = DATA.about;
+
+    document.getElementById("about").innerHTML = `
+        <h2>${a.title}</h2>
+        <p>${a.text.replace(/\n/g,"<br>")}</p>
+    `;
+}
+
+function renderProducts() {
+    const p = DATA.products;
+
+    let cards = "";
+
+    p.items.forEach(item => {
+        cards += `
+            <div class="card">
+                <h3>${item.name}</h3>
+                <p>${item.desc.replace(/\n/g,"<br>")}</p>
+            </div>
+        `;
+    });
+
+    document.getElementById("products").innerHTML = `
+        <h2>${p.title}</h2>
+        <div class="cards">${cards}</div>
+    `;
+}
+
+function renderRoadmap() {
+    const r = DATA.roadmap;
+
+    let list = "";
+
+    r.items.forEach(i => {
+        list += `<li>${i}</li>`;
+    });
+
+    document.getElementById("roadmap").innerHTML = `
+        <h2>${r.title}</h2>
+        <p>${r.text.replace(/\n/g,"<br>")}</p>
+
+        <ul class="roadmap">
+            ${list}
+        </ul>
+
+        <p>
+            GitHub:
+            <a href="${r.github}" target="_blank">${r.github}</a>
+        </p>
+    `;
+}
+
+function renderContact() {
+    const c = DATA.contact;
+
+    document.getElementById("contact").innerHTML = `
+        <h2>${c.title}</h2>
+
+        <div class="contact">
+            <p>GitHub:
+                <a href="${c.github}" target="_blank">${c.github}</a>
+            </p>
+
+            <p>E-mail:
+                <a href="mailto:${c.mail}">${c.mail}</a>
+            </p>
+        </div>
+    `;
+}
+
+function renderFooter() {
+    const f = DATA.footer;
+
+    document.getElementById("footer").innerHTML = `
+        <div class="warning">
+            ${f.warning.replace(/\n/g,"<br>")}
+        </div>
+    `;
+}
+
+
+/* Init */
+
+renderHero();
+renderAbout();
+renderProducts();
+renderRoadmap();
+renderContact();
+renderFooter();
+
+</script>
+
+</body>
+</html>
+
